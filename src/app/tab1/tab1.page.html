@@ -1,0 +1,76 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Pantau Corona
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="highcharts" style="width:100%; height:400px;"></div>
+
+  <!-- <app-explore-container name="Tab 1 page"></app-explore-container> -->
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-title>Info Corona</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card button detail lines="inset" (click)="countryRegion(IndoCov[0]?.countryRegion)">
+    <ion-card-header>
+      <ion-card-title>{{IndoCov[0]?.countryRegion}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-item>
+      <ion-icon name="medkit-outline" slot="start"></ion-icon>
+      <ion-label>
+        <div class="ion-text-start">
+          Positif
+        </div>
+        <div class="ion-text-end">
+          {{IndoCov[0]?.confirmed}}
+        </div>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="happy-outline" slot="start"></ion-icon>
+      <ion-label>
+        <div class="ion-text-start">
+          Sembuh
+        </div>
+        <div class="ion-text-end">
+          {{IndoCov[0]?.recovered}}
+        </div>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="skull-outline" slot="start"></ion-icon>
+      <ion-label>
+        <div class="ion-text-start">
+          Meninggal
+        </div>
+
+        <div class="ion-text-end">
+          {{IndoCov[0]?.deaths}}
+        </div>
+      </ion-label>
+    </ion-item>
+    <ion-item class="ion-activated">
+      <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+      <ion-label>Info lanjut</ion-label>
+    </ion-item>
+  </ion-card>
+  <ion-card button detail lines="inset" *ngFor="let item of dataList" (click)="countryRegion(item)">
+    <ion-list>
+      <ion-item>
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+        <ion-label>{{item}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

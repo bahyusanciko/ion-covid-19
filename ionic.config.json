@@ -1,0 +1,8 @@
+{
+  "name": "ion-cor",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}
