@@ -3,7 +3,13 @@
     <ion-buttons slot="start" (click)="backHome()" class="ion-padding">
       <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-buttons>
-    <ion-title>{{covCountry[0]?.countryRegion}}</ion-title>
+    <ion-title style="text-align:left;"
+      >{{covCountry[0]?.countryRegion}}
+      <span style="float:right;">
+        <ion-icon name="time-outline"></ion-icon>
+        {{covCountry[0]?.lastUpdate | date }}
+      </span>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,48 +17,67 @@
   <ion-card>
     <div #map class="map"></div>
   </ion-card>
-  <ion-card>
-    <div *ngFor="let item of covCountry">
+  <ion-card *ngFor="let item of covCountry">
+    <ion-card-header>
+      <ion-card-title *ngIf="item.provinceState == null"
+        >{{item.countryRegion}}</ion-card-title
+      >
+      <ion-card-title *ngIf="item.provinceState"
+        >{{item.provinceState}}</ion-card-title
+      >
+    </ion-card-header>
+    <ion-item>
+      <ion-icon name="medkit-outline" slot="start"></ion-icon>
+      <ion-label style="text-align:left;">
+        Positif
+        <span style="float:right;"> {{item.confirmed}} </span>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="happy-outline" slot="start"></ion-icon>
+      <ion-label style="text-align:left;">
+        Sembuh
+        <span style="float:right;"> {{item.recovered}} </span>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="skull-outline" slot="start"></ion-icon>
+      <ion-label style="text-align:left;">
+        Meninggal
+        <span style="float:right;"> {{item.deaths}} </span>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+  <div *ngIf="covProvinsi">
+    <ion-card *ngFor="let item of covProvinsi">
       <ion-card-header>
-        <ion-card-title *ngIf="item.provinceState == null">{{item.countryRegion}}</ion-card-title>
-        <ion-card-title *ngIf="item.provinceState">{{item.provinceState}}</ion-card-title>
+        <ion-card-title>{{item.attributes.Provinsi}}</ion-card-title>
       </ion-card-header>
       <ion-item>
         <ion-icon name="medkit-outline" slot="start"></ion-icon>
-        <ion-label>
-          <div class="ion-text-start">
-            Positif
-          </div>
-          <div class="ion-text-end">
-            {{item.confirmed}}
-          </div>
+        <ion-label style="text-align:left;">
+          Positif
+          <span style="float:right;"> {{item.attributes.Kasus_Posi}} </span>
         </ion-label>
       </ion-item>
 
       <ion-item>
         <ion-icon name="happy-outline" slot="start"></ion-icon>
-        <ion-label>
-          <div class="ion-text-start">
-            Sembuh
-          </div>
-          <div class="ion-text-end">
-            {{item.recovered}}
-          </div>
+        <ion-label style="text-align:left;">
+          Sembuh
+          <span style="float:right;"> {{item.attributes.Kasus_Semb}} </span>
         </ion-label>
       </ion-item>
 
       <ion-item>
         <ion-icon name="skull-outline" slot="start"></ion-icon>
-        <ion-label>
-          <div class="ion-text-start">
-            Meninggal
-          </div>
-
-          <div class="ion-text-end">
-            {{item.deaths}}
-          </div>
+        <ion-label style="text-align:left;">
+          Meninggal
+          <span style="float:right;"> {{item.attributes.Kasus_Meni}} </span>
         </ion-label>
       </ion-item>
-    </div>
-  </ion-card>
+    </ion-card>
+  </div>
 </ion-content>

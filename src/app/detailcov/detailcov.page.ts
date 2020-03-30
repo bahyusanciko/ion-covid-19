@@ -22,6 +22,8 @@ export class DetailcovPage implements OnInit {
   CountryDet: any = [];
   loading: any;
   covCountry: any = [];
+  covProvinsi: any = [];
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private http: HTTP,
@@ -65,6 +67,11 @@ export class DetailcovPage implements OnInit {
     this.loading = await this.loadingController.create({
       message: "Loading data from api"
     });
+    if (location == "Indonesia") {
+      this.getProvApi();
+    } else {
+      this.covProvinsi = null;
+    }
 
     return this.http
       .sendRequest(
@@ -80,6 +87,24 @@ export class DetailcovPage implements OnInit {
         this.ionViewDidLoad(this.covCountry[0].lat, this.covCountry[0].long);
         console.log(this.covCountry);
         return this.covCountry;
+      })
+      .catch(res => {
+        // prints 403
+        this.errorAlert("aduh");
+      });
+  }
+
+  getProvApi() {
+    return this.http
+      .sendRequest(`https://api.kawalcorona.com/indonesia/provinsi/`, {
+        method: "get",
+        timeout: 5000
+      })
+      .then(res => {
+        this.loading.dismiss();
+        this.covProvinsi = JSON.parse(res.data);
+        console.log(this.covProvinsi);
+        return this.covProvinsi;
       })
       .catch(res => {
         // prints 403

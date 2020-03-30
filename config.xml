@@ -112,4 +112,7 @@
     <plugin name="cordova-sqlite-storage" spec="^5.0.0" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.2" />
     <plugin name="cordova-plugin-nativegeocoder" spec="^3.3.1" />
+    <allow-navigation href="http://localhost:8104" sessionid="9ce1dea4" />
+    <allow-navigation href="http://localhost:8105" sessionid="4291b5e7" />
+    <allow-navigation href="http://localhost:8106" sessionid="8424fc03" />
 </widget>
