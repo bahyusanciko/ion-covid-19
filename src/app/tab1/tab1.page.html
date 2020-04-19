@@ -1,31 +1,28 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title style="text-align:left;"
-      >Pantau Covid-19
+    <ion-title style="text-align:left;">Pantau Covid-19
       <span style="float:right;">
         <ion-icon name="time-outline"></ion-icon>
         {{IndoCov[0]?.lastUpdate | date}}
       </span>
     </ion-title>
   </ion-toolbar>
+  <ion-searchbar  placeholder="Search for a place">
+  </ion-searchbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  
   <div id="highcharts" style="width:100%; height:400px;"></div>
 
   <!-- <app-explore-container name="Tab 1 page"></app-explore-container> -->
   <ion-header class="ion-no-border">
     <ion-toolbar>
-      <ion-title>Info Penyeberan Virus Covid-19</ion-title>
+      <ion-title>Info Penyebaran Virus Covid-19</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-card
-    button
-    detail
-    lines="inset"
-    (click)="countryRegion(IndoCov[0]?.countryRegion)"
-  >
+  <ion-card button detail lines="inset" (click)="countryRegion(IndoCov[0]?.countryRegion)">
     <ion-card-header>
       <ion-card-title>{{IndoCov[0]?.countryRegion}}</ion-card-title>
     </ion-card-header>
@@ -57,13 +54,7 @@
       <ion-label>Info lanjut</ion-label>
     </ion-item>
   </ion-card>
-  <ion-card
-    button
-    detail
-    lines="inset"
-    *ngFor="let item of dataList"
-    (click)="countryRegion(item)"
-  >
+  <ion-card button detail lines="inset" *ngFor="let item of dataList" (click)="countryRegion(item)">
     <ion-list>
       <ion-item>
         <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
@@ -72,10 +63,7 @@
     </ion-list>
   </ion-card>
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Loading more data..."
-    >
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>

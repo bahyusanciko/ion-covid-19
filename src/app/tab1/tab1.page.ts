@@ -28,6 +28,8 @@ export class Tab1Page implements OnInit {
   IndoCov: any = [];
   location: any = [];
   index: number;
+  autocomplete: { input: string; }; 
+
   constructor(
     private http: HTTP,
     public alertController: AlertController,
@@ -68,6 +70,10 @@ export class Tab1Page implements OnInit {
     });
   }
 
+  updateSearchResults() {
+   console.log(this.autocomplete.input)    //search input will display
+  }
+   
   async getCovapi() {
     this.loading = await this.loadingController.create({
       message: "Loading data from api"
