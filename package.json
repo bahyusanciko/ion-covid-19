@@ -46,9 +46,11 @@
     "cordova-sqlite-storage": "^5.0.0",
     "core-js": "^2.5.4",
     "highcharts": "^8.0.4",
+    "ionic": "^5.4.16",
     "ios-sim": "^9.0.0",
     "mapbox-gl": "^1.9.0",
     "rxjs": "~6.5.1",
+    "save-dev": "0.0.1-security",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
   },
