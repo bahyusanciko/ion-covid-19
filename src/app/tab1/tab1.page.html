@@ -52,16 +52,13 @@
       <ion-label>Info lanjut</ion-label>
     </ion-item>
   </ion-card>
-  <ion-card button detail lines="inset" *ngFor="let item of dataList" (click)="countryRegion(item)">
+  <ion-searchbar placeholder="Cari Negara" [(ngModel)]="term" animated="true"></ion-searchbar>
+  <ion-card button detail lines="inset" *ngFor="let item of location?.countries | filter:term" (click)=" countryRegion(item.name)">
     <ion-list>
       <ion-item>
         <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
-        <ion-label>{{item}}</ion-label>
+        <ion-label>{{item.name}}</ion-label>
       </ion-item>
     </ion-list>
   </ion-card>
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 </ion-content>

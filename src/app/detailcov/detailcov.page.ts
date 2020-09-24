@@ -15,7 +15,7 @@ import mapboxgl from "mapbox-gl";
 @Component({
   selector: "app-detailcov",
   templateUrl: "./detailcov.page.html",
-  styleUrls: ["./detailcov.page.scss"]
+  styleUrls: ["./detailcov.page.scss"],
 })
 export class DetailcovPage implements OnInit {
   @ViewChild("map", { static: true }) map: ElementRef;
@@ -23,7 +23,7 @@ export class DetailcovPage implements OnInit {
   loading: any;
   covCountry: any = [];
   covProvinsi: any = [];
-
+  term: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private http: HTTP,
@@ -44,7 +44,7 @@ export class DetailcovPage implements OnInit {
       container: this.map.nativeElement,
       style: "mapbox://styles/mapbox/streets-v11",
       center: [long, lat],
-      zoom: 5
+      zoom: 5,
     });
 
     new mapboxgl.Marker({
@@ -52,8 +52,8 @@ export class DetailcovPage implements OnInit {
       type: "symbol",
       source: "points",
       layout: {
-        "icon-image": "rocket-15"
-      }
+        "icon-image": "rocket-15",
+      },
     })
       .setLngLat([long, lat])
       .setPopup(
@@ -65,7 +65,7 @@ export class DetailcovPage implements OnInit {
 
   async getCountry(location: any) {
     this.loading = await this.loadingController.create({
-      message: "Loading data from api"
+      message: "Loading data from api",
     });
     if (location == "Indonesia") {
       this.getProvApi();
@@ -78,17 +78,17 @@ export class DetailcovPage implements OnInit {
         `https://covid19.mathdro.id/api/countries/${location}/confirmed`,
         {
           method: "get",
-          timeout: 5000
+          timeout: 5000,
         }
       )
-      .then(res => {
+      .then((res) => {
         this.loading.dismiss();
         this.covCountry = JSON.parse(res.data);
         this.ionViewDidLoad(this.covCountry[0].lat, this.covCountry[0].long);
-        console.log(this.covCountry);
+        // console.log(this.covCountry);
         return this.covCountry;
       })
-      .catch(res => {
+      .catch((res) => {
         // prints 403
         this.errorAlert("aduh");
       });
@@ -98,17 +98,17 @@ export class DetailcovPage implements OnInit {
     return this.http
       .sendRequest(`https://api.kawalcorona.com/indonesia/provinsi/`, {
         method: "get",
-        timeout: 5000
+        timeout: 5000,
       })
-      .then(res => {
+      .then((res) => {
         this.loading.dismiss();
         this.covProvinsi = JSON.parse(res.data);
-        console.log(this.covProvinsi);
+        // console.log(this.covProvinsi);
         return this.covProvinsi;
       })
-      .catch(res => {
+      .catch((res) => {
         // prints 403
-        this.errorAlert("aduh");
+        this.errorAlert("Erorr Data Wilayah");
       });
   }
   async errorAlert(err: any) {
@@ -116,7 +116,7 @@ export class DetailcovPage implements OnInit {
       header: "Error",
       // subHeader: "Subtitle",
       message: err,
-      buttons: ["OK"]
+      buttons: ["OK"],
     });
     await alert.present();
   }
