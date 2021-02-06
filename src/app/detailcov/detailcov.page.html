@@ -3,8 +3,7 @@
     <ion-buttons slot="start" (click)="backHome()" class="ion-padding">
       <ion-icon name="arrow-back-outline"></ion-icon>
     </ion-buttons>
-    <ion-title style="text-align:left;"
-      >{{covCountry[0]?.countryRegion}}
+    <ion-title style="text-align:left;">{{covCountry[0]?.countryRegion}}
       <span style="float:right;">
         <ion-icon name="time-outline"></ion-icon>
         {{covCountry[0]?.lastUpdate | date }}
@@ -15,16 +14,17 @@
 
 <ion-content>
   <ion-card>
-    <div #map class="map"></div>
+    <div class="map-wrapper">
+      <div id="map_center">
+        <img src="assets/icon/marker.svg" />
+      </div>
+      <div #map id="map"></div>
+    </div>
   </ion-card>
   <ion-card *ngFor="let item of covCountry">
     <ion-card-header>
-      <ion-card-title *ngIf="item.provinceState == null"
-        >{{item.countryRegion}}</ion-card-title
-      >
-      <ion-card-title *ngIf="item.provinceState"
-        >{{item.provinceState}}</ion-card-title
-      >
+      <ion-card-title *ngIf="item.provinceState == null">{{item.countryRegion}}</ion-card-title>
+      <ion-card-title *ngIf="item.provinceState">{{item.provinceState}}</ion-card-title>
     </ion-card-header>
     <ion-item>
       <ion-icon name="medkit-outline" slot="start"></ion-icon>
@@ -51,7 +51,7 @@
     </ion-item>
   </ion-card>
   <div *ngIf="covProvinsi">
-      <ion-searchbar placeholder="Cari Wilayah" [(ngModel)]="term" animated="true"></ion-searchbar>
+    <ion-searchbar placeholder="Cari Wilayah" [(ngModel)]="term" animated="true"></ion-searchbar>
     <ion-card *ngFor="let item of covProvinsi | filter:term">
       <ion-card-header>
         <ion-card-title>{{item.attributes.Provinsi}}</ion-card-title>

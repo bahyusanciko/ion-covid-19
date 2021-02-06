@@ -1,21 +1,34 @@
-.map {
-    width: auto;
-    height: 50vh;
+#map_canvas {
+    width: 90%;
+    height: 40%;
+    border: 1px solid red;
 }
 
-.full-width {
-    padding: 0 10px;
+#address {
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
-.mapboxgl-popup {
-    max-width: 200px;
+#map {
+    width: 100%;
+    height: 40vh;
 }
 
-.mapboxgl-popup-content {
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
-}
+.map-wrapper {
+    position: relative;
 
+    #map_center {
+        position: absolute;
+        z-index: 99;
+        height: 20px;
+        width: 40px;
+        top: 50%;
+        left: 50%;
+        margin-left: -21px;
+        margin-top: -41px;
+    }
+}
 .text-left {
     text-align: left;
 }

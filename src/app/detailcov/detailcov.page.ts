@@ -10,7 +10,8 @@ import {
 
 import { HTTP } from "@ionic-native/http/ngx";
 
-import mapboxgl from "mapbox-gl";
+declare var google;
+
 
 @Component({
   selector: "app-detailcov",
@@ -18,11 +19,14 @@ import mapboxgl from "mapbox-gl";
   styleUrls: ["./detailcov.page.scss"],
 })
 export class DetailcovPage implements OnInit {
-  @ViewChild("map", { static: true }) map: ElementRef;
+  @ViewChild('map', { static: false }) mapElement: ElementRef;
+  map: any;
   CountryDet: any = [];
   loading: any;
   covCountry: any = [];
-  covProvinsi: any = [];
+  covProvinsi: any = [];  
+  latitude: string;
+  longitude: string;
   term: any;
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -37,30 +41,25 @@ export class DetailcovPage implements OnInit {
     this.getCountry(id);
   }
 
-  ionViewDidLoad(lat: any, long: any) {
-    mapboxgl.accessToken =
-      "pk.eyJ1IjoiYmFoeXVzYW5jaWtvIiwiYSI6ImNrN3Q5ZmpkazA3bnczbG1rOTZ2dG5hdGYifQ.WiosQS5mManFNE8DXpYgRg";
-    var map = new mapboxgl.Map({
-      container: this.map.nativeElement,
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [long, lat],
-      zoom: 5,
-    });
+  ionViewDidLoad(latitude: string, longtitude: string) {
+      let latLng = new google.maps.LatLng(latitude, longtitude);
+      let mapOptions = {
+        center: latLng,
+        zoom: 18,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      }
 
-    new mapboxgl.Marker({
-      id: "symbols",
-      type: "symbol",
-      source: "points",
-      layout: {
-        "icon-image": "rocket-15",
-      },
-    })
-      .setLngLat([long, lat])
-      .setPopup(
-        new mapboxgl.Popup({ offset: 25 }) // add popups
-          .setHTML("<h3>Hay </h3><p> Kamu Disini</p>")
-      )
-      .addTo(map);
+      // this.getAddress(latitude, longtitude);
+
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      this.map.setOptions({draggable: false, zoomControl: false,fullscreenControl: false, scrollwheel: false, disableDoubleClickZoom: true,streetViewControl: false,mapTypeControl: false});
+      this.map.addListener('dragend', () => {
+
+        this.latitude = this.map.center.lat();
+        this.longitude = this.map.center.lng();
+
+        // this.getAddress(this.map.center.lat(), this.map.center.lng())
+      });
   }
 
   async getCountry(location: any) {
