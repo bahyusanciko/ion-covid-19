@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
+import { ServiceWorkerModule } from "@angular/service-worker";
 
 import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
@@ -13,6 +14,8 @@ import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
 import { HTTP } from "@ionic-native/http/ngx";
 import { CommonModule } from "@angular/common";
 import { IonicStorageModule } from "@ionic/storage";
+import { environment } from '../environments/environment';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,7 +24,10 @@ import { IonicStorageModule } from "@ionic/storage";
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js',
+      { enabled: environment.production,registrationStrategy: 'registerImmediately'  }
+    )
   ],
   providers: [
     StatusBar,
