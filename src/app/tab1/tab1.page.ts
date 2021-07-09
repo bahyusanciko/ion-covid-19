@@ -25,7 +25,7 @@ export class Tab1Page implements OnInit {
   autocomplete: { input: string };
 
   constructor(
-    public alertController: AlertController,
+    public  alertController: AlertController,
     private loadingController: LoadingController,
     private router: Router
   ) {}
@@ -100,7 +100,7 @@ export class Tab1Page implements OnInit {
         return this.IndoCov;
       })
       .catch((res) => {
-        // prints 403
+        this.loading.dismiss();
         this.errorAlert(res.status);
         return res.status;
       });

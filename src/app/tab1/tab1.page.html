@@ -29,7 +29,7 @@
       <ion-icon name="medkit-outline" slot="start"></ion-icon>
       <ion-label style="text-align:left;">
         Positif
-        <span style="float:right;"> {{IndoCov[0]?.confirmed}} </span>
+        <span style="float:right;"> {{IndoCov[0]?.confirmed | number}} </span>
       </ion-label>
     </ion-item>
 
@@ -37,14 +37,14 @@
       <ion-icon name="happy-outline" slot="start"></ion-icon>
       <ion-label style="text-align:left;">
         Sembuh
-        <span style="float:right;"> {{IndoCov[0]?.recovered}} </span>
+        <span style="float:right;"> {{IndoCov[0]?.recovered | number}} </span>
       </ion-label>
     </ion-item>
     <ion-item>
       <ion-icon name="skull-outline" slot="start"></ion-icon>
       <ion-label style="text-align:left;">
         Meninggal
-        <span style="float:right;"> {{IndoCov[0]?.deaths}} </span>
+        <span style="float:right;"> {{IndoCov[0]?.deaths | number}} </span>
       </ion-label>
     </ion-item>
     <ion-item class="ion-activated">

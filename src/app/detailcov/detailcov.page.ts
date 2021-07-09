@@ -7,7 +7,7 @@ import {
   AlertController,
   LoadingController
 } from "@ionic/angular";
-
+import mapboxgl from "mapbox-gl";
 import { Http } from '@capacitor-community/http';
 
 declare var google;
@@ -20,6 +20,7 @@ declare var google;
 })
 export class DetailcovPage implements OnInit {
   @ViewChild('map', { static: false }) mapElement: ElementRef;
+
   map: any;
   CountryDet: any = [];
   loading: any;
@@ -33,44 +34,50 @@ export class DetailcovPage implements OnInit {
     private router: Router,
     private storage: Storage,
     private loadingController: LoadingController,
-    public alertController: AlertController
+    public  alertController: AlertController
   ) {}
   ngOnInit() {
     let id = this.activatedRoute.snapshot.paramMap.get("id");
     this.getCountry(id);
   }
 
-  ionViewDidLoad(latitude: string, longtitude: string) {
-      let latLng = new google.maps.LatLng(latitude, longtitude);
-      let mapOptions = {
-        center: latLng,
-        zoom: 18,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
+  ionViewDidLoad(lat: any, long: any) {
+    mapboxgl.accessToken ="pk.eyJ1IjoiYmFoeXVzYW5jaWtvIiwiYSI6ImNrcXdoYnJqcjBvYWUyd282ZGZvZzEyMjAifQ.dKZ47swlv6T4YmQ3uu07vA";
+    let map = new mapboxgl.Map({
+      container: this.map.nativeElement,
+      style: "mapbox://styles/mapbox/streets-v11",
+      center: [long, lat],
+      zoom: 5,
+    });
 
-      // this.getAddress(latitude, longtitude);
+    new mapboxgl.Marker({
+        id: "symbols",
+        type: "symbol",
+        source: "points",
+        layout: {
+          "icon-image": "rocket-15",
+        },
+    })
+    .setLngLat([long, lat])
+    .setPopup(
+      new mapboxgl.Popup({ offset: 25 }) // add popups
+        .setHTML("<h3>Hay </h3><p> Kamu Disini</p>")
+    ).addTo(map);
 
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-      this.map.setOptions({draggable: false, zoomControl: false,fullscreenControl: false, scrollwheel: false, disableDoubleClickZoom: true,streetViewControl: false,mapTypeControl: false});
-      this.map.addListener('dragend', () => {
-
-        this.latitude = this.map.center.lat();
-        this.longitude = this.map.center.lng();
-
-        // this.getAddress(this.map.center.lat(), this.map.center.lng())
-      });
+    console.log(long+lat)
   }
+
 
   async getCountry(location: any) {
     this.loading = await this.loadingController.create({
       message: "Loading data from api",
     });
+
     if (location == "Indonesia") {
       this.getProvApi();
     } else {
       this.covProvinsi = null;
     }
-
     return Http
       .request(
         {
@@ -81,32 +88,39 @@ export class DetailcovPage implements OnInit {
       .then((res) => {
         this.loading.dismiss();
         this.covCountry = res.data;
+        console.log(res.data)
         this.ionViewDidLoad(this.covCountry[0].lat, this.covCountry[0].long);
         // console.log(this.covCountry);
         return this.covCountry;
       })
       .catch((res) => {
         // prints 403
-        this.errorAlert("aduh");
+        // this.errorAlert("aduh");
+        this.loading.dismiss();
       });
+    this.loading.present();
   }
 
-  getProvApi() {
+  async getProvApi() {
+    this.loading = await this.loadingController.create({
+      message: "Loading data from api",
+    });
     return Http
       .request({
-        url: `https://api.kawalcorona.com/indonesia/provinsi/`,
+        url: `https://cariteknisi.space/api/getarea`,
         method: "get",
       })
       .then((res) => {
         this.loading.dismiss();
         this.covProvinsi = res.data;
-        // console.log(this.covProvinsi);
+        console.log(this.covProvinsi);
         return this.covProvinsi;
       })
       .catch((res) => {
-        // prints 403
         this.errorAlert("Erorr Data Wilayah");
+        this.loading.dismiss();
       });
+    this.loading.present();
   }
   async errorAlert(err: any) {
     const alert = await this.alertController.create({

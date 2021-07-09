@@ -16,7 +16,7 @@
   <ion-card>
     <div class="map-wrapper">
       <div id="map_center">
-        <img src="assets/icon/marker.svg" />
+        <!-- <img src="assets/icon/marker.svg" /> -->
       </div>
       <div #map id="map"></div>
     </div>
@@ -31,7 +31,7 @@
       <ion-icon name="medkit-outline" slot="start"></ion-icon>
       <ion-label style="text-align:left;">
         Positif
-        <span style="float:right;"> {{item.confirmed}} </span>
+        <span style="float:right;"> {{item.confirmed | number}} </span>
       </ion-label>
     </ion-item>
 
@@ -39,7 +39,7 @@
       <ion-icon name="happy-outline" slot="start"></ion-icon>
       <ion-label style="text-align:left;">
         Sembuh
-        <span style="float:right;"> {{item.recovered}} </span>
+        <span style="float:right;"> {{item.recovered | number}} </span>
       </ion-label>
     </ion-item>
 
@@ -47,7 +47,7 @@
       <ion-icon name="skull-outline" slot="start"></ion-icon>
       <ion-label style="text-align:left;">
         Meninggal
-        <span style="float:right;"> {{item.deaths}} </span>
+        <span style="float:right;"> {{item.deaths | number}} </span>
       </ion-label>
     </ion-item>
   </ion-card>
@@ -60,7 +60,7 @@
         <ion-icon name="medkit-outline" slot="start"></ion-icon>
         <ion-label style="text-align:left;">
           Positif
-          <span style="float:right;"> {{item.attributes.Kasus_Posi}} </span>
+          <span style="float:right;"> {{item.attributes.Kasus_Posi | number}} </span>
         </ion-label>
       </ion-item>
 
@@ -68,7 +68,7 @@
         <ion-icon name="happy-outline" slot="start"></ion-icon>
         <ion-label style="text-align:left;">
           Sembuh
-          <span style="float:right;"> {{item.attributes.Kasus_Semb}} </span>
+          <span style="float:right;"> {{item.attributes.Kasus_Semb | number}} </span>
         </ion-label>
       </ion-item>
 
@@ -76,7 +76,7 @@
         <ion-icon name="skull-outline" slot="start"></ion-icon>
         <ion-label style="text-align:left;">
           Meninggal
-          <span style="float:right;"> {{item.attributes.Kasus_Meni}} </span>
+          <span style="float:right;"> {{item.attributes.Kasus_Meni | number}} </span>
         </ion-label>
       </ion-item>
     </ion-card>

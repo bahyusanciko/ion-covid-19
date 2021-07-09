@@ -10,7 +10,11 @@ const routes: Routes = [
     path: "detailcov/:id",
     loadChildren: () =>
       import("./detailcov/detailcov.module").then(m => m.DetailcovPageModule)
+  },  {
+    path: 'tab4',
+    loadChildren: () => import('./tab4/tab4.module').then( m => m.Tab4PageModule)
   }
+
 ];
 @NgModule({
   imports: [
