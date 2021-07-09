@@ -21,7 +21,8 @@
       <div #map id="map"></div>
     </div>
   </ion-card>
-  <ion-card *ngFor="let item of covCountry">
+  <ion-searchbar placeholder="Cari Wilayah" [(ngModel)]="term" animated="true"></ion-searchbar>
+  <ion-card *ngFor="let item of covCountry | filter:term">
     <ion-card-header>
       <ion-card-title *ngIf="item.provinceState == null">{{item.countryRegion}}</ion-card-title>
       <ion-card-title *ngIf="item.provinceState">{{item.provinceState}}</ion-card-title>
@@ -51,7 +52,6 @@
     </ion-item>
   </ion-card>
   <div *ngIf="covProvinsi">
-    <ion-searchbar placeholder="Cari Wilayah" [(ngModel)]="term" animated="true"></ion-searchbar>
     <ion-card *ngFor="let item of covProvinsi | filter:term">
       <ion-card-header>
         <ion-card-title>{{item.attributes.Provinsi}}</ion-card-title>

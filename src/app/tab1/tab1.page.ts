@@ -6,7 +6,7 @@ import {
   AlertController,
   LoadingController,
 } from "@ionic/angular";
-import { HTTP } from "@ionic-native/http/ngx";
+import { Http } from '@capacitor-community/http';
 import { Router } from "@angular/router";
 
 @Component({
@@ -25,7 +25,6 @@ export class Tab1Page implements OnInit {
   autocomplete: { input: string };
 
   constructor(
-    private http: HTTP,
     public alertController: AlertController,
     private loadingController: LoadingController,
     private router: Router
@@ -67,14 +66,14 @@ export class Tab1Page implements OnInit {
     this.loading = await this.loadingController.create({
       message: "Loading data from api",
     });
-    return this.http
-      .sendRequest(`${this.AUTH_SERVER_ADDRESS}`, {
+    return Http
+      .request({
+        url: `${this.AUTH_SERVER_ADDRESS}`,
         method: "get",
-        timeout: 5000,
       })
       .then((res) => {
         this.loading.dismiss();
-        this.apiCov = JSON.parse(res.data);
+        this.apiCov = res.data;
         return this.apiCov;
       })
       .catch((res) => {
@@ -90,14 +89,14 @@ export class Tab1Page implements OnInit {
       message: "Loading data from api",
     });
 
-    return this.http
-      .sendRequest(`${this.AUTH_SERVER_ADDRESS}countries/indonesia/confirmed`, {
+    return Http
+      .request({
+        url: `${this.AUTH_SERVER_ADDRESS}countries/indonesia/confirmed`,
         method: "get",
-        timeout: 5000,
       })
       .then((res) => {
         this.loading.dismiss();
-        this.IndoCov = JSON.parse(res.data);
+        this.IndoCov = res.data;
         return this.IndoCov;
       })
       .catch((res) => {
@@ -109,13 +108,13 @@ export class Tab1Page implements OnInit {
   }
 
   async getCountryApi() {
-    return this.http
-    .sendRequest(`https://covid19.mathdro.id/api/countries/`, {
+    return Http
+    .request({
+      url: `https://covid19.mathdro.id/api/countries/`,
       method: "get",
-      timeout: 5000,
     })
     .then((res) => {
-      this.location = JSON.parse(res.data);
+      this.location = res.data;
       console.log(this.location)
       return this.location;
     })

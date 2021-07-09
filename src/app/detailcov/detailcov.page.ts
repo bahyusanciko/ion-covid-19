@@ -8,7 +8,7 @@ import {
   LoadingController
 } from "@ionic/angular";
 
-import { HTTP } from "@ionic-native/http/ngx";
+import { Http } from '@capacitor-community/http';
 
 declare var google;
 
@@ -30,7 +30,6 @@ export class DetailcovPage implements OnInit {
   term: any;
   constructor(
     private activatedRoute: ActivatedRoute,
-    private http: HTTP,
     private router: Router,
     private storage: Storage,
     private loadingController: LoadingController,
@@ -72,17 +71,16 @@ export class DetailcovPage implements OnInit {
       this.covProvinsi = null;
     }
 
-    return this.http
-      .sendRequest(
-        `https://covid19.mathdro.id/api/countries/${location}/confirmed`,
+    return Http
+      .request(
         {
+          url: `https://covid19.mathdro.id/api/countries/${location}/confirmed`,
           method: "get",
-          timeout: 5000,
         }
       )
       .then((res) => {
         this.loading.dismiss();
-        this.covCountry = JSON.parse(res.data);
+        this.covCountry = res.data;
         this.ionViewDidLoad(this.covCountry[0].lat, this.covCountry[0].long);
         // console.log(this.covCountry);
         return this.covCountry;
@@ -94,14 +92,14 @@ export class DetailcovPage implements OnInit {
   }
 
   getProvApi() {
-    return this.http
-      .sendRequest(`https://api.kawalcorona.com/indonesia/provinsi/`, {
+    return Http
+      .request({
+        url: `https://api.kawalcorona.com/indonesia/provinsi/`,
         method: "get",
-        timeout: 5000,
       })
       .then((res) => {
         this.loading.dismiss();
-        this.covProvinsi = JSON.parse(res.data);
+        this.covProvinsi = res.data;
         // console.log(this.covProvinsi);
         return this.covProvinsi;
       })
