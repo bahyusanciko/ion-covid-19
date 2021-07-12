@@ -2,16 +2,11 @@ import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Storage } from "@ionic/storage";
 import {
-  NavController,
-  ToastController,
   AlertController,
   LoadingController
 } from "@ionic/angular";
 import mapboxgl from "mapbox-gl";
 import { Http } from '@capacitor-community/http';
-
-declare var google;
-
 
 @Component({
   selector: "app-detailcov",
@@ -19,8 +14,33 @@ declare var google;
   styleUrls: ["./detailcov.page.scss"],
 })
 export class DetailcovPage implements OnInit {
-  @ViewChild('map', { static: false }) mapElement: ElementRef;
-
+  @ViewChild('mapbox', { static: false }) set content(content: ElementRef) {
+    console.log(this.covCountry[0])
+    if (content && this.covCountry[0]) {
+        mapboxgl.accessToken = 'pk.eyJ1IjoiYmFoeXVzYW5jaWtvIiwiYSI6ImNrcXdoYnJqcjBvYWUyd282ZGZvZzEyMjAifQ.dKZ47swlv6T4YmQ3uu07vA';
+        this.map = new mapboxgl.Map({
+            container: content.nativeElement,
+            style: "mapbox://styles/mapbox/streets-v11",
+            zoom: 12,
+            center: [this.covCountry[0].long,this.covCountry[0].lat]
+        });
+        // Add map controls
+        this.map.addControl(new mapboxgl.NavigationControl());
+        new mapboxgl.Marker({
+            id: "symbols",
+            type: "symbol",
+            source: "points",
+            layout: {
+              "icon-image": "rocket-15",
+            },
+        })
+        .setLngLat([this.covCountry[0].long,this.covCountry[0].lat])
+        .setPopup(
+          new mapboxgl.Popup({ offset: 25 }) // add popups
+            .setHTML(`<h3>Hello </h3><p> ${this.covCountry[0].countryRegion}</p>`)
+        ).addTo(this.map);
+    }
+  }
   map: any;
   CountryDet: any = [];
   loading: any;
@@ -30,6 +50,7 @@ export class DetailcovPage implements OnInit {
   longitude: string;
   term: any;
   constructor(
+    private mapElement: ElementRef,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private storage: Storage,
@@ -40,33 +61,6 @@ export class DetailcovPage implements OnInit {
     let id = this.activatedRoute.snapshot.paramMap.get("id");
     this.getCountry(id);
   }
-
-  ionViewDidLoad(lat: any, long: any) {
-    mapboxgl.accessToken ="pk.eyJ1IjoiYmFoeXVzYW5jaWtvIiwiYSI6ImNrcXdoYnJqcjBvYWUyd282ZGZvZzEyMjAifQ.dKZ47swlv6T4YmQ3uu07vA";
-    let map = new mapboxgl.Map({
-      container: this.map.nativeElement,
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [long, lat],
-      zoom: 5,
-    });
-
-    new mapboxgl.Marker({
-        id: "symbols",
-        type: "symbol",
-        source: "points",
-        layout: {
-          "icon-image": "rocket-15",
-        },
-    })
-    .setLngLat([long, lat])
-    .setPopup(
-      new mapboxgl.Popup({ offset: 25 }) // add popups
-        .setHTML("<h3>Hay </h3><p> Kamu Disini</p>")
-    ).addTo(map);
-
-    console.log(long+lat)
-  }
-
 
   async getCountry(location: any) {
     this.loading = await this.loadingController.create({
@@ -88,9 +82,6 @@ export class DetailcovPage implements OnInit {
       .then((res) => {
         this.loading.dismiss();
         this.covCountry = res.data;
-        console.log(res.data)
-        this.ionViewDidLoad(this.covCountry[0].lat, this.covCountry[0].long);
-        // console.log(this.covCountry);
         return this.covCountry;
       })
       .catch((res) => {
