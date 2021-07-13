@@ -15,13 +15,12 @@ import { Http } from '@capacitor-community/http';
 })
 export class DetailcovPage implements OnInit {
   @ViewChild('mapbox', { static: false }) set content(content: ElementRef) {
-    console.log(this.covCountry[0])
     if (content && this.covCountry[0]) {
         mapboxgl.accessToken = 'pk.eyJ1IjoiYmFoeXVzYW5jaWtvIiwiYSI6ImNrcXdoYnJqcjBvYWUyd282ZGZvZzEyMjAifQ.dKZ47swlv6T4YmQ3uu07vA';
         this.map = new mapboxgl.Map({
             container: content.nativeElement,
             style: "mapbox://styles/mapbox/streets-v11",
-            zoom: 12,
+            zoom: 4,
             center: [this.covCountry[0].long,this.covCountry[0].lat]
         });
         // Add map controls
