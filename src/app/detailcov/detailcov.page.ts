@@ -85,7 +85,7 @@ export class DetailcovPage implements OnInit {
       })
       .catch((res) => {
         // prints 403
-        // this.errorAlert("aduh");
+        this.errorAlert("hubungi it office");
         this.loading.dismiss();
       });
     this.loading.present();

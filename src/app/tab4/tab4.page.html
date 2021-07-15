@@ -5,26 +5,62 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let item of apiVax">
-      <ion-avatar slot="start">
-        <img [src]="item.imageUrl">
-      </ion-avatar>
-      <ion-label>
-        <ion-text>
-          <h2>{{item.namaLokasi}}</h2>
-        </ion-text>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card *ngFor="let item of apiVax">
+          <ion-item>
+            <ion-icon name="pin" slot="start"></ion-icon>
+            <ion-text>
+              {{item.namaLokasi}}
+            </ion-text>
+          </ion-item>
+          <ion-card-content>
+            <ion-item>
+              <ion-text>
+                <span class="ion-text-left">Total Kouta : </span>
+                <span class="ion-text-right">{{item.totalKuota | number}}</span>
+              </ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-text>
+                <span class="ion-text-left">Sisa Kouta : </span>
+                <span class="ion-text-right">{{item.sisaKuota | number}}</span>
+              </ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-text>
+                <span class="ion-text-left">Jaki Kouta : </span>
+                <span class="ion-text-right">{{item.jakiKuota}}</span>
+              </ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-text>
+                <span class="ion-text-left">Jenis Faskes : </span>
+                <span class="ion-text-right">{{item.jenisFaskes}}</span>
+              </ion-text>
+            </ion-item>
+                        <ion-item>
+              <ion-text>
+                <span class="ion-text-left">Wilayah : </span>
+                <span class="ion-text-right">{{item.wilayah}}</span>
+              </ion-text>
+            </ion-item>
+                       <ion-item>
+              <ion-text>
+                <span class="ion-text-left">Tanggal Kouta : </span>
+                <span class="ion-text-right">{{item.tanggalKuota | date}}</span>
+              </ion-text>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Loading more data...">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 
 
 </ion-content>
-

@@ -16,10 +16,11 @@ import { Router } from "@angular/router";
 })
 export class Tab4Page implements OnInit {
   AUTH_SERVER_ADDRESS: string = "https://cariteknisi.space/api/getvaksin";
-  apiVax: any;
+  apiVax: any = [];
+  respone: any;
   loading: any;
   page_number = 1;
-  page_limit = 8;
+  page_limit = 50;
   @ViewChild(IonInfiniteScroll,{ static: false }) infiniteScroll: IonInfiniteScroll;
 
   constructor(
@@ -41,15 +42,16 @@ export class Tab4Page implements OnInit {
         method: "get",
       })
       .then((res) => {
-        this.loading.dismiss();        
-        this.apiVax.push(res.data);
+        this.respone = res.data.data;
+        for (let key in res.data.data) {
+          this.apiVax.push(res.data.data[key]);
+        }
         console.log(this.apiVax)
-        this.apiVax
+        this.loading.dismiss();
       })
       .catch((res) => {
-        this.loading.dismiss();
         this.errorAlert('Segara hadir');
-        res.status;
+        this.loading.dismiss();
       });
       if (isFirstLoad){
         event.target.complete();
@@ -59,6 +61,8 @@ export class Tab4Page implements OnInit {
   }
   
   doInfinite(event) {
+    this.page_number =+ 49
+    this.page_limit =+ 50
     this.loadData(true, event);
   }
 

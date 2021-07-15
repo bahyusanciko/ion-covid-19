@@ -79,6 +79,7 @@ export class Tab1Page implements OnInit {
       .catch((res) => {
         // prints 403
         this.errorAlert(res.status);
+        this.loading.dismiss();
         return res.status;
       });
     this.loading.present();
