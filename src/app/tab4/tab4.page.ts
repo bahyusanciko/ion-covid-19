@@ -15,7 +15,7 @@ import { Router } from "@angular/router";
   styleUrls: ['./tab4.page.scss'],
 })
 export class Tab4Page implements OnInit {
-  AUTH_SERVER_ADDRESS: string = "https://cariteknisi.space/api/getvaksin";
+  AUTH_SERVER_ADDRESS: string = "https://apiapps.maxistyle.com/api/getvaksin";
   apiVax: any = [];
   respone: any;
   loading: any;
