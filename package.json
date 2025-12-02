@@ -26,7 +26,7 @@
     "@angular/router": "~8.2.14",
     "@angular/service-worker": "~8.2.14",
     "@babel/compat-data": "^7.8.0",
-    "@babel/runtime": "^7.9.2",
+    "@babel/runtime": "^7.28.4",
     "@capacitor-community/http": "^0.3.2",
     "@capacitor/android": "3.2.0",
     "@capacitor/core": "^3.0.0-rc.4",
